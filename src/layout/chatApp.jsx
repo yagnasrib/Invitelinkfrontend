@@ -23,7 +23,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/solid"
 
-const socket = io("http://localhost:5000", {
+const socket = io("https://invitelinkbackend.onrender.com", {
   withCredentials: true,
 })
 
@@ -87,7 +87,7 @@ const PollCreator = ({ onClose, onSubmit }) => {
         createdBy: localStorage.getItem("userId"),
       }
       try {
-        const response = await fetch("http://localhost:5000/api/polls/create", {
+        const response = await fetch("https://invitelinkbackend.onrender.com/api/polls/create", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(pollData),
@@ -160,7 +160,7 @@ const PollDisplay = ({ pollData, onVote, userId }) => {
   const handleVote = async (optionIndex) => {
     if (!hasVoted) {
       try {
-        const response = await fetch("http://localhost:5000/api/polls/vote", {
+        const response = await fetch("https://invitelinkbackend.onrender.com/api/polls/vote", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ pollId: pollData._id, optionIndex, userId }),
@@ -288,7 +288,7 @@ const ChatApp = () => {
         setError("No user ID found. Please log in.")
         return
       }
-      const response = await fetch(`http://localhost:5000/api/auths/getAllUsers/${userId}`, {
+      const response = await fetch(`https://invitelinkbackend.onrender.com/api/auths/getAllUsers/${userId}`, {
         credentials: "include",
       })
       if (!response.ok) {
@@ -313,7 +313,7 @@ const ChatApp = () => {
 
   const handleLogin = async (username, password) => {
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
+      const response = await fetch("https://invitelinkbackend.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -344,7 +344,7 @@ const ChatApp = () => {
 
   const fetchChannels = async (query = "") => {
     try {
-      const response = await fetch("http://localhost:5000/api/auths/search", {
+      const response = await fetch("https://invitelinkbackend.onrender.com/api/auths/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),
@@ -444,7 +444,7 @@ const ChatApp = () => {
     const isChatRequest = !messages.some((msg) => msg.isAccepted)
     const messagePayload = { from, to, message: newMessage, isChatRequest }
     try {
-      await fetch("http://localhost:5000/api/messages/addmsg", {
+      await fetch("https://invitelinkbackend.onrender.com/api/messages/addmsg", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(messagePayload),
@@ -463,7 +463,7 @@ const ChatApp = () => {
 
   const handleRequest = async (requestId, action) => {
     try {
-      const response = await fetch("http://localhost:5000/api/auths/handleRequest", {
+      const response = await fetch("https://invitelinkbackend.onrender.com/api/auths/handleRequest", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ requestId, action }),
@@ -480,7 +480,7 @@ const ChatApp = () => {
     socket.on("connect", () => {
       const fetchUnreadMessages = async () => {
         try {
-          const response = await fetch("http://localhost:5000/api/messages/get", {
+          const response = await fetch("https://invitelinkbackend.onrender.com/api/messages/get", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ from: user, to: selectedChannel }),

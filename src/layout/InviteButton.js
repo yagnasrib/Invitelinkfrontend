@@ -23,14 +23,15 @@ const InviteButton = ({ chatId }) => {
   // Generate Invite Link when clicking "Invite"
   const generateInviteLink = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/invites/generate-invite", {
+      const response = await fetch("https://invitelinkbackend.onrender.com/api/invites/generate-invite", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ chatId }),
       });
   
       const data = await response.json();
-      setInviteLink(`http://localhost:3000/login?inviteId=${data.inviteId}`); // Now directs to login
+      setInviteLink(`https://invitelinkfrontend.vercel.app=${data.inviteId}`); // This looks incorrect
+      // Now directs to login
     } catch (error) {
       alert("Failed to generate invite. Please try again.");
     }
